@@ -721,19 +721,17 @@ const STATUS = {
     };
     const top = missed.slice(0, 3), rest = missed.slice(3);
     $('sa-plan-intro').textContent = missed.length === 0
-      ? 'You scored on every question. The list below is how teams at this level keep their edge as AI-driven vulnerability discovery scales up.'
+      ? 'You scored on every question. The list above is how teams at this level keep their edge as AI-driven vulnerability discovery scales up. Below is what you already have in place.'
       : missed.length <= 3
         ? `You have ${missed.length} gap${missed.length > 1 ? 's' : ''} to close. Ordered by impact, based on what we see across the teams Endor Labs works with.`
         : `Start with these three. They are ordered by impact, based on what we see across the teams Endor Labs works with. The rest of your list is below.`;
-    $('sa-plan').innerHTML = missed.length === 0
-      ? `<div class="sa-plan">${lvl.next.map((t, k) => `<div class="sa-step"><div class="sa-step-n">${k+1}</div><div><p style="color:var(--text);margin:0">${esc(t)}</p></div></div>`).join('')}</div>`
-      : top.map((i, k) => card(i, k + 1)).join('');
+    $('sa-plan').innerHTML = missed.length === 0 ? '' : top.map((i, k) => card(i, k + 1)).join('');
     $('sa-more').hidden = rest.length === 0;
     $('sa-more').open = false;
     $('sa-more-label').textContent = `Also on your list (${rest.length} more)`;
     $('sa-plan-more').innerHTML = rest.map((i, k) => card(i, k + 4)).join('');
 
-    $('sa-strong-wrap').hidden = strong.length === 0 || missed.length === 0;
+    $('sa-strong-wrap').hidden = strong.length === 0;
     $('sa-strong').innerHTML = strong.map(i =>
       `<div class="sa-strong-item">${statusHtml('strong')}<div><b>${esc(QUESTIONS[i].label)}</b>${esc(dimOf(QUESTIONS[i].dim).name)}</div></div>`).join('');
   }
